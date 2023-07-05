@@ -1,0 +1,14 @@
+{
+  "name": "minewatch-launcher",
+  "version": "1.0.0",
+  "description": "MineWatch - Real-time Minecraft Server Insights.",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "author": "Sandro642",
+  "license": "Mit License",
+  "devDependencies": {
+    "electron": "^25.2.0"
+  }
+}
