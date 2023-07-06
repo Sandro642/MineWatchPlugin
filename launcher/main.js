@@ -13,7 +13,7 @@ const createWindow = () => {
     height: 720,
     autoHideMenuBar: true,
     show : false,
-    icon: "logo.ico"
+    icon: "img/logo.ico"
   })
 
   var splash = new BrowserWindow({
@@ -22,7 +22,7 @@ const createWindow = () => {
     transparent: true, 
     frame: false, 
     alwaysOnTop: true,
-    icon: "logo.ico"
+    icon: "img/logo.ico"
 })
 
     splash.loadFile('loader.html'); 
@@ -34,7 +34,7 @@ const createWindow = () => {
       }, 6000);
 
   // et chargement de l'index.html de l'application.
-  mainWindow.loadFile('index.html');
+  mainWindow.loadFile('httpd/index.html');
   mainWindow.center();
 
   // Ouvrir les outils de développement.
