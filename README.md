@@ -1,11 +1,5 @@
 # MineWatch 
 
-<center>
-  <img src="https://raw.githubusercontent.com/Sandro642/MineWatch/main/logo.png">
-</center>
-
-##
-
 🚀 Projet Minecraft en Java et Electron
 
 Ce projet a pour objectif de développer une application permettant de gérer et surveiller un serveur Minecraft à l'aide d'un plugin personnalisé. L'application utilise à la fois le langage de programmation Java et le framework Electron pour offrir une interface utilisateur conviviale.
