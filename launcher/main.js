@@ -34,7 +34,7 @@ const createWindow = () => {
       }, 6000);
 
   // et chargement de l'index.html de l'application.
-  mainWindow.loadFile('httpd/index.html');
+  mainWindow.loadFile('httpd/index.php');
   mainWindow.center();
 
   // Ouvrir les outils de développement.
