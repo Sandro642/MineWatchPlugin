@@ -1,4 +1,10 @@
-# MineWatch
+# MineWatch 
+
+<center>
+  <img src="https://raw.githubusercontent.com/Sandro642/MineWatch/main/logo.png">
+</center>
+
+##
 
 🚀 Projet Minecraft en Java et Electron
 
