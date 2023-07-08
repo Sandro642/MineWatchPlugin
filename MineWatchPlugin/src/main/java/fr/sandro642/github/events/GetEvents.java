@@ -19,8 +19,8 @@ public class GetEvents implements Listener {
         // sql.tableInsert();
         Insert ins = new Insert();
         ins.setTable("LogsMineWatch");
-        ins.setColumns("player, Action");
-        ins.setData(e.getPlayer().getName(), "Join server");
+        ins.setColumns("World, player, Action");
+        ins.setData(e.getPlayer().getWorld().getName() ,e.getPlayer().getName(), "Join server");
         Main.mySQL.tableInsert(ins);
 
     }
@@ -31,7 +31,7 @@ public class GetEvents implements Listener {
 
         Insert ins = new Insert();
 
-        ins.setData(e.getPlayer().getName(), "Quit server");
+        ins.setData(e.getPlayer().getWorld().getName() ,e.getPlayer().getName(), "Quit server");
         Main.mySQL.tableInsert(ins);
 
     }
@@ -44,7 +44,7 @@ public class GetEvents implements Listener {
 
         Item item = e.getItemDrop();
 
-        ins.setData(e.getPlayer().getName(), "Drop item: " + item);
+        ins.setData(e.getPlayer().getWorld().getName() ,e.getPlayer().getName(), "Drop item: " + item);
         Main.mySQL.tableInsert(ins);
     }
 
@@ -56,7 +56,7 @@ public class GetEvents implements Listener {
 
         Item item = e.getItem();
 
-        ins.setData(e.getPlayer().getName(), "Pick up item: " + item);
+        ins.setData(e.getPlayer().getWorld().getName() ,e.getPlayer().getName(), "Pick up item: " + item);
         Main.mySQL.tableInsert(ins);
     }
 
