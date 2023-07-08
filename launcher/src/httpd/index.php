@@ -17,6 +17,7 @@
 <body>
     <table>
         <tr>
+            <th>World</th>
             <th>Player</th>
             <th>Action</th>
         </tr>
@@ -47,6 +48,7 @@
             // Parcourir les lignes de résultats et afficher les données dans le tableau
             while ($row = $result->fetch_assoc()) {
                 echo "<tr>";
+                echo "<td>".$row['World']."</td>";
                 echo "<td>".$row['Player']."</td>";
                 echo "<td>".$row['Action']."</td>";
                 echo "</tr>";
