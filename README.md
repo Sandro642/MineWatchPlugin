@@ -1,4 +1,4 @@
-# MineWatch
+# MineWatch 
 
 🚀 Projet Minecraft en Java et Electron
 
@@ -16,7 +16,7 @@ Ce projet a pour objectif de développer une application permettant de gérer et
 
 - ☕ **Java**: Utilisé pour développer le plugin Minecraft, qui s'intègre au serveur.
 - ⚡ **Electron**: Utilisé pour créer l'application de surveillance, fournissant une interface utilisateur multiplateforme.
-- 🍃 **MongoDB**: Utilisé comme système de gestion de base de données pour enregistrer les événements du serveur Minecraft.
+- 🍃 **MySQL**: Utilisé comme système de gestion de base de données pour enregistrer les événements du serveur Minecraft.
 
 ## Avantages
 
