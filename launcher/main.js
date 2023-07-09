@@ -25,7 +25,7 @@ const createWindow = () => {
     icon: "img/logo.ico"
 })
 
-    splash.loadFile('loader.html'); 
+    splash.loadFile('src/loader.html'); 
     splash.center();
 
     setTimeout(function () { 
@@ -34,7 +34,7 @@ const createWindow = () => {
       }, 6000);
 
   // et chargement de l'index.html de l'application.
-  mainWindow.loadFile('httpd/index.php');
+  mainWindow.loadFile('src/httpd/index.php');
   mainWindow.center();
 
   // Ouvrir les outils de développement.

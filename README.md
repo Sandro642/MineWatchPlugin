@@ -9,7 +9,7 @@ Ce projet a pour objectif de développer une application permettant de gérer et
 - 🔌 **Installation du plugin**: L'application facilite l'installation et la gestion du plugin sur le serveur Minecraft.
 - 🎧 **Écoute des événements**: Une fois le plugin installé, il écoute les événements qui se produisent sur le serveur, tels que les connexions des joueurs, les commandes exécutées, les actions des joueurs, etc.
 - 💾 **Enregistrement des données**: Les événements capturés sont enregistrés dans une base de données MongoDB pour une utilisation ultérieure.
-- 📚 **Lecture des données**: L'application écoute continuellement la base de données MongoDB pour récupérer les nouvelles données enregistrées.
+- 📚 **Lecture des données**: L'application écoute continuellement la base de données MySQL pour récupérer les nouvelles données enregistrées.
 - 📋 **Affichage des logs**: Les données récupérées sont affichées sous forme de tableau dans l'application, offrant ainsi une vue claire et organisée des activités du serveur Minecraft.
 
 ## Technologies utilisées
