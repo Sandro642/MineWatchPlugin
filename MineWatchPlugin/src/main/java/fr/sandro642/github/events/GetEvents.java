@@ -1,8 +1,6 @@
 package fr.sandro642.github.events;
 
-import de.tallerik.utils.Insert;
-import fr.sandro642.github.Main;
-import org.bukkit.entity.Item;
+import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerDropItemEvent;
@@ -10,54 +8,72 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerPickupItemEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+
 public class GetEvents implements Listener {
 
-    @EventHandler
-    public void onJoin(PlayerJoinEvent e) {
-        Main.checkStatus();
+    private static Connection connection;
 
-        // sql.tableInsert();
-        Insert ins = new Insert();
-        ins.setTable("LogsMineWatch");
-        ins.setColumns("World, player, Action");
-        ins.setData(e.getPlayer().getWorld().getName() ,e.getPlayer().getName(), "Join server");
-        Main.mySQL.tableInsert(ins);
+    public static void getConnectionInformation(String host, int port, String database, String user, String password) {
+        String url = "jdbc:mysql://" + host + ":" + port + "/" + database;
 
+        try {
+            connection = DriverManager.getConnection(url, user, password);
+            Bukkit.getConsoleSender().sendMessage("Connected to MySQL database!");
+        } catch (SQLException e) {
+            Bukkit.getConsoleSender().sendMessage("Failed to connect to MySQL database: " + e.getMessage());
+        }
     }
 
     @EventHandler
-    public void onQuit(PlayerQuitEvent e) {
-        Main.checkStatus();
+    public void onPlayerJoin(PlayerJoinEvent event) {
+        String world = event.getPlayer().getWorld().getName();
+        String player = event.getPlayer().getName();
+        String action = "Join server";
 
-        Insert ins = new Insert();
-
-        ins.setData(e.getPlayer().getWorld().getName() ,e.getPlayer().getName(), "Quit server");
-        Main.mySQL.tableInsert(ins);
-
+        insertLogEntry(world, player, action);
     }
 
     @EventHandler
-    public void onDrop(PlayerDropItemEvent e) {
-        Main.checkStatus();
+    public void onPlayerQuit(PlayerQuitEvent event) {
+        String world = event.getPlayer().getWorld().getName();
+        String player = event.getPlayer().getName();
+        String action = "Quit server";
 
-        Insert ins = new Insert();
-
-        Item item = e.getItemDrop();
-
-        ins.setData(e.getPlayer().getWorld().getName() ,e.getPlayer().getName(), "Drop item: " + item);
-        Main.mySQL.tableInsert(ins);
+        insertLogEntry(world, player, action);
     }
 
     @EventHandler
-    public void onPickUp(PlayerPickupItemEvent e) {
-        Main.checkStatus();
+    public void onPlayerDropItem(PlayerDropItemEvent event) {
+        String world = event.getPlayer().getWorld().getName();
+        String player = event.getPlayer().getName();
+        String action = "Drop item";
 
-        Insert ins = new Insert();
-
-        Item item = e.getItem();
-
-        ins.setData(e.getPlayer().getWorld().getName() ,e.getPlayer().getName(), "Pick up item: " + item);
-        Main.mySQL.tableInsert(ins);
+        insertLogEntry(world, player, action);
     }
 
+    @EventHandler
+    public void onPlayerPickupItem(PlayerPickupItemEvent event) {
+        String world = event.getPlayer().getWorld().getName();
+        String player = event.getPlayer().getName();
+        String action = "Pick up item";
+
+        insertLogEntry(world, player, action);
+    }
+
+    private void insertLogEntry(String world, String player, String action) {
+        String query = "INSERT INTO MineWatchLog (World, Player, Action) VALUES (?, ?, ?)";
+
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setString(1, world);
+            statement.setString(2, player);
+            statement.setString(3, action);
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            Bukkit.getConsoleSender().sendMessage("Failed to insert log entry: " + e.getMessage());
+        }
+    }
 }

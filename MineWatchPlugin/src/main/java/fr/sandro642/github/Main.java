@@ -1,26 +1,23 @@
 package fr.sandro642.github;
 
-import de.tallerik.MySQL;
 import fr.sandro642.github.commands.MineWatchCmd;
 import fr.sandro642.github.events.GetEvents;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.sql.*;
+import java.util.Objects;
+
 public class Main extends JavaPlugin {
 
-    public static void checkStatus() {
-        if (!Main.getInstance().getConfig().getBoolean("SQL.Enabled") == true) {
-            Bukkit.getConsoleSender().sendMessage("Plugin MineWatch is not enabled. Execute /minewatch start");
-            return;
-        }
-    }
-
-    public static Main instance;
-
-    public static MySQL mySQL = new MySQL();
+    private static Main instance;
+    private static Connection connection;
 
     @Override
     public void onEnable() {
+        instance = this;
+        saveDefaultConfig();
+
         Bukkit.getConsoleSender().sendMessage("§8+------------------------------------+");
         Bukkit.getConsoleSender().sendMessage("          §dMineWatch§5Plugin");
         Bukkit.getConsoleSender().sendMessage("               §aEnabled");
@@ -29,6 +26,7 @@ public class Main extends JavaPlugin {
         Bukkit.getConsoleSender().sendMessage("§f-> §cLoading core:");
         checkEvents();
         checkSqlDB();
+        loadCommands();
 
         Bukkit.getConsoleSender().sendMessage("§9");
         Bukkit.getConsoleSender().sendMessage("§8+------------------------------------+");
@@ -37,79 +35,103 @@ public class Main extends JavaPlugin {
 
     @Override
     public void onDisable() {
-        // Default launch
-        instance = this;
-
-
         Bukkit.getConsoleSender().sendMessage("§8+------------------------------------+");
         Bukkit.getConsoleSender().sendMessage("          §dMineWatch§5Plugin");
         Bukkit.getConsoleSender().sendMessage("               §aDisabled");
         Bukkit.getConsoleSender().sendMessage("§8");
 
         Bukkit.getConsoleSender().sendMessage("§f-> §cDisabling core:");
-
-        disabledSqlDB();
+        try {
+            disabledSqlDB();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
 
         Bukkit.getConsoleSender().sendMessage("§9");
         Bukkit.getConsoleSender().sendMessage("§8+------------------------------------+");
     }
 
-    public void disabledSqlDB() {
+    public void disabledSqlDB() throws SQLException {
         try {
-            Main.mySQL.close();
+            Bukkit.getConsoleSender().sendMessage("   - §fSqlDB: §aDisabling");
+            if (connection != null && !connection.isClosed()) {
+                connection.close();
+            }
         } catch (Exception e) {
             Bukkit.getConsoleSender().sendMessage(String.valueOf(e));
             Bukkit.getConsoleSender().sendMessage("-> §dError Disabling...");
-            return;
         }
-        Bukkit.getConsoleSender().sendMessage("   - §fSqlDB: §aDisabling");
     }
 
     public void loadCommands() {
         try {
-            getCommand("minewatch").setExecutor(new MineWatchCmd(this));
-        } catch (Exception e) {
-            Bukkit.getConsoleSender().sendMessage(String.valueOf(e));
-            Bukkit.getConsoleSender().sendMessage("-> §dError load Commands...");
-            return;
+            MineWatchCmd mineWatchCmd = new MineWatchCmd();
+            Objects.requireNonNull(getCommand("minewatch")).setExecutor(mineWatchCmd);
+            Bukkit.getConsoleSender().sendMessage("   - §fCommands: §aLoaded");
+        } catch (NullPointerException e) {
+            Bukkit.getConsoleSender().sendMessage("   - §fCommands: §4Error");
+            e.printStackTrace();
         }
-        Bukkit.getConsoleSender().sendMessage("   - §fCommands: §aLoaded");
     }
+
+    private boolean tableExists(String tableName) throws SQLException {
+        DatabaseMetaData metaData = connection.getMetaData();
+        try (ResultSet resultSet = metaData.getTables(null, null, tableName, null)) {
+            return resultSet.next();
+        }
+    }
+    private void createTableIfNotExists(String tableName) throws SQLException {
+        String query = "CREATE TABLE IF NOT EXISTS " + tableName + " ("
+                + "id INT AUTO_INCREMENT PRIMARY KEY,"
+                + "World VARCHAR(255),"
+                + "Player VARCHAR(255),"
+                + "Action VARCHAR(255)"
+                + ")";
+
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.executeUpdate();
+        }
+    }
+
 
     public void checkSqlDB() {
         try {
-            mySQL.setHost(Main.getInstance().getConfig().getString("SQL.Host"));
-            mySQL.setUser(Main.getInstance().getConfig().getString("SQL.User"));
-            mySQL.setPassword(Main.getInstance().getConfig().getString("SQL.Password"));
-            mySQL.setDb(Main.getInstance().getConfig().getString("SQL.Database"));
+            String host = getConfig().getString("SQL.Host");
+            String user = getConfig().getString("SQL.User");
+            String password = getConfig().getString("SQL.Password");
+            String database = getConfig().getString("SQL.Database");
+            int port = getConfig().getInt("SQL.Port", 3306);
 
-            mySQL.setPort(Main.getInstance().getConfig().getInt("SQL.Port")); // Optional. Default: 3306
-            mySQL.setDebug(Main.getInstance().getConfig().getBoolean("SQL.Debug")); // Optional. Default: false
-
-            Main.mySQL.connect();
-
-            Main.mySQL.isConnected();
-
-            if (Main.getInstance().getConfig().getBoolean("SQL.Debug") == true) {
-                Main.mySQL.isDebug();
+            // Vérification de l'existence de la table MineWatchLog
+            if (!tableExists("MineWatchLog")) {
+                createTableIfNotExists("MineWatchLog");
             }
-        } catch (Exception e) {
-            Bukkit.getConsoleSender().sendMessage(String.valueOf(e));
+
+            String url = "jdbc:mysql://" + host + ":" + port + "/" + database;
+            connection = DriverManager.getConnection(url, user, password);
+            GetEvents.getConnectionInformation(host, port, database, user, password);
+
+            Bukkit.getConsoleSender().sendMessage("   - §fSqlDB: §aLoaded");
+            Bukkit.getConsoleSender().sendMessage("      - §fConnected to MySQL: " + url);
+        } catch (SQLException e) {
+            Bukkit.getConsoleSender().sendMessage("Failed to connect to MySQL database: " + e.getMessage());
             Bukkit.getConsoleSender().sendMessage("-> §dError charging...");
-            return;
+
+            // Open Circuit
+
+            getServer().getPluginManager().disablePlugin(this);
         }
-        Bukkit.getConsoleSender().sendMessage("   - §fSqlDB: §aLoaded");
     }
+
 
     public void checkEvents() {
         try {
             getServer().getPluginManager().registerEvents(new GetEvents(), this);
+            Bukkit.getConsoleSender().sendMessage("   - §fEvents: §aLoaded");
         } catch (Exception e) {
             Bukkit.getConsoleSender().sendMessage(String.valueOf(e));
             Bukkit.getConsoleSender().sendMessage("-> §dError charging...");
-            return;
         }
-        Bukkit.getConsoleSender().sendMessage("   - §fEvents: §aLoaded");
     }
 
     public static Main getInstance() {
