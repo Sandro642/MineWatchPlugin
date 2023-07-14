@@ -74,13 +74,13 @@ public class Main extends JavaPlugin {
         }
     }
 
-    private boolean tableExists(String tableName) throws SQLException {
+    public boolean tableExists(String tableName) throws SQLException {
         DatabaseMetaData metaData = connection.getMetaData();
         try (ResultSet resultSet = metaData.getTables(null, null, tableName, null)) {
             return resultSet.next();
         }
     }
-    private void createTableIfNotExists(String tableName) throws SQLException {
+    public void createTableIfNotExists(String tableName) throws SQLException {
         String query = "CREATE TABLE IF NOT EXISTS " + tableName + " ("
                 + "id INT AUTO_INCREMENT PRIMARY KEY,"
                 + "World VARCHAR(255),"
@@ -122,7 +122,6 @@ public class Main extends JavaPlugin {
             getServer().getPluginManager().disablePlugin(this);
         }
     }
-
 
     public void checkEvents() {
         try {
