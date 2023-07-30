@@ -1,8 +1,0 @@
-SQL:
-  Enabled: true
-  Host: localhost
-  User: root
-  Password: root
-  Database: MineWatch
-  Port: 3306 # default 3306
-  Debug: False # default false
