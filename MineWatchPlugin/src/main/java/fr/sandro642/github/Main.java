@@ -80,18 +80,21 @@ public class Main extends JavaPlugin {
             return resultSet.next();
         }
     }
+   
     public void createTableIfNotExists(String tableName) throws SQLException {
-        String query = "CREATE TABLE IF NOT EXISTS " + tableName + " ("
-                + "id INT AUTO_INCREMENT PRIMARY KEY,"
-                + "World VARCHAR(255),"
-                + "Player VARCHAR(255),"
-                + "Action VARCHAR(255)"
-                + ")";
+    String query = "CREATE TABLE IF NOT EXISTS " + tableName + " ("
+            + "id INT AUTO_INCREMENT PRIMARY KEY,"
+            + "World VARCHAR(255),"
+            + "Player VARCHAR(255),"
+            + "Action VARCHAR(255),"
+            + "Timestamp DATETIME"
+            + ")";
 
-        try (PreparedStatement statement = connection.prepareStatement(query)) {
-            statement.executeUpdate();
-        }
+    try (PreparedStatement statement = connection.prepareStatement(query)) {
+        statement.executeUpdate();
     }
+}
+
 
 
     public void checkSqlDB() {
