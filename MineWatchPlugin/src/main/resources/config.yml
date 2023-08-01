@@ -1,8 +1,13 @@
-SQL:
-  Enabled: true
-  Host: localhost
-  User: root
-  Password: root
-  Database: MineWatch
-  Port: 3306 # default 3306
-  Debug: False # default false
+MineWatch:
+  DB_URI: "jdbc:mysql://mysql-hungrycodes.alwaysdata.net:3306/hungrycodes_minewatch?useSSL=false"
+  USER: "307217_sandro"
+  PASS: "Sandro3345"
+  TABLE: "table_joueurs"
+
+SetAccessDataInput:
+  onPlayerJoin: true
+  onPlayerQuit: true
+  onBlockBreak: true
+  onBlockPlace: true
+  onPlayerDeath: true
+  onPlayerRespawn: true
