@@ -1,19 +1,86 @@
+//MIT License
+//
+//Copyright (c) 2023 Sandro Soria
+//
+//Permission is hereby granted, free of charge, to any person obtaining a copy
+//of this software and associated documentation files (the "Software"), to deal
+//in the Software without restriction, including without limitation the rights
+//to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+//copies of the Software, and to permit persons to whom the Software is
+//furnished to do so, subject to the following conditions:
+//
+//The above copyright notice and this permission notice shall be included in all
+//copies or substantial portions of the Software.
+//
+//THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+//IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+//FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+//AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+//LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+//OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+//SOFTWARE.
+
 package fr.sandro642.github.db;
 
 import fr.sandro642.github.MineWatch;
 
 import java.sql.*;
 
+
+/**
+ * @Author: Sandro642
+ * @Date: 2020/6/3 15:00
+ * @File: MineWatch
+ * @Version: 1.0
+ * @Description: Main class of the plugin
+ * @JDK: 1.8
+ * @Software: IntelliJ IDEA
+ * @Github: https://github.com/Sandro642/MineWatch
+ * @Contact: https://sandro642.me/
+ * @License: MIT License
+ * @Project: MineWatch
+ * @Server: Minecraft
+ * @PluginTag: MineWatch
+ * @PluginMainClass: fr.sandro642.github.MineWatch
+ * @PluginVersion: 1.0.0
+ * @PluginDescription: A plugin to watch your server
+ */
+
 public class DBManagerSQL {
-    // Les informations de connexion à la base de données MySQL
+
+
+    /**
+     * var for the connection
+     * @param DB_URL
+     * @param USER
+     * @param PASS
+     * @param TABLE_NAME
+     * @return
+     */
+
     private static final String DB_URL = MineWatch.getInstance().getConfig().getString("MineWatch.DB_URI");
     private static final String USER = MineWatch.getInstance().getConfig().getString("MineWatch.USER");
     private static final String PASS = MineWatch.getInstance().getConfig().getString("MineWatch.PASS");
     private static final String TABLE_NAME = MineWatch.getInstance().getConfig().getString("MineWatch.TABLE");
 
+
+    /**
+     * Get the connection
+     * @return
+     * @throws SQLException
+     */
+
     public static Connection getConnection() throws SQLException {
         return DriverManager.getConnection(DB_URL, USER, PASS);
     }
+
+
+    /**
+     * Close the connection
+     * @param conn
+     * @param stmt
+     * @param rs
+     */
 
     public static void closeResources(Connection conn, Statement stmt, ResultSet rs) {
         try {
@@ -33,7 +100,16 @@ public class DBManagerSQL {
         }
     }
 
-    public static void createMaTable() {
+
+    /**
+     * Create the table
+     * @return
+     * @throws SQLException
+     * @throws ClassNotFoundException
+     * @throws Exception
+     */
+
+    public static void createTableClass() {
         Connection conn = null;
         Statement stmt = null;
 
@@ -71,6 +147,15 @@ public class DBManagerSQL {
         }
     }
 
+
+    /**
+     * Init the connection
+     * @return
+     * @throws SQLException
+     * @throws ClassNotFoundException
+     * @throws Exception
+     */
+
     public static void initConnection() {
         Connection conn = null;
         Statement stmt = null;
@@ -107,8 +192,15 @@ public class DBManagerSQL {
         System.out.println("Connexion à la base de données terminée.");
     }
 
-    // Méthode pour enregistrer les informations dans la base de données
-    // Méthode pour enregistrer les informations dans la base de données
+
+    /**
+     * Add an element to the table
+     * @param action
+     * @param playerName
+     * @param worldName
+     * @param timestamp
+     */
+
     public static void addElement(String action, String playerName, String worldName, long timestamp) {
         Connection conn = null;
         PreparedStatement pstmt = null;
