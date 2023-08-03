@@ -3,7 +3,6 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/MineWatch.iml" filepath="$PROJECT_DIR$/.idea/MineWatch.iml" />
-      <module fileurl="file://$PROJECT_DIR$/MineWatchPlugin/MineWatchPlugin.iml" filepath="$PROJECT_DIR$/MineWatchPlugin/MineWatchPlugin.iml" />
     </modules>
   </component>
 </project>
