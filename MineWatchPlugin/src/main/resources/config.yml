@@ -1,3 +1,5 @@
+# Config file for MineWatchPlugin
+
 MineWatch:
   DB_URI: "jdbc:mysql://mysql-hungrycodes.alwaysdata.net:3306/hungrycodes_minewatch?useSSL=false"
   USER: "307217_sandro"

@@ -1,3 +1,5 @@
+# Plugin file for MineWatchPlugin
+
 main: fr.sandro642.github.MineWatch
 name: MineWatch
 version: 1.0
