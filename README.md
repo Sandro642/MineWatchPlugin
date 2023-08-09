@@ -37,12 +37,12 @@ MineWatchPlugin est un plugin développé pour surveiller et enregistrer les act
 ## Utilisation
 
 1. Une fois installé, le plugin commence à surveiller automatiquement les événements du serveur.
-2. Pour accéder aux logs en jeu, utilisez la commande `/minewatch logs`.
+2. Vous pouvez filtrer les données envoyer à la database `config.yml` vous sélectionnez true or false à chaque event.
 
 ## Technologies utilisées
 
 - ☕ **Java**: Le plugin est développé en Java pour une intégration fluide avec le serveur Minecraft.
-- 🍃 **MongoDB**: Une base de données MongoDB est utilisée pour stocker les données capturées.
+- 🍃 **MySQL**: Une base de données MySQL est utilisée pour stocker les données capturées.
 
 ## Contributions
 
