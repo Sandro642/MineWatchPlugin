@@ -45,6 +45,7 @@ MineWatchPlugin est un plugin développé pour surveiller et enregistrer les act
 - 🍃 **MySQL**: Une base de données MySQL est utilisée pour stocker les données capturées.
 - :electron: **Electron** : L'application utilise Electron pour créer une interface utilisateur native multiplateforme.
 - :computer: **Vue.js** : Vue.js est utilisé pour développer l'interface utilisateur réactive de l'application.
+- :computer: **JavaScript** : JavaScript est utilisé pour développer des fonctionnalités interactives dans l'application.
 
 ## Contributions
 
