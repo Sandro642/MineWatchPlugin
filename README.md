@@ -37,6 +37,7 @@ N'hésitez pas à personnaliser ce projet en fonction de vos besoins spécifique
 <center>
   <a href="https://github.com/Sandro642/MineWatchAPI">MineWatchAPI</a> <br>
   <a href="https://github.com/Sandro642/MineWatchLauncher">MineWatchLauncher</a>
+  <br>
 </center>
 
 Fini le : XX/XX/XXXX
