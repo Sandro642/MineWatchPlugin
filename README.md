@@ -21,8 +21,8 @@ Ce projet a pour objectif de développer une application permettant de gérer et
 ## Utilisation
 
 Pour avoir le bon fonctionnement de MineWatch, vous devez consulter et installer de répertoire différent comme : MineWatchAPI et MineWatchLauncher.
-MineWatchAPI va permettre de récupérer les données dans votre database et les classer dans un tableau json sur le web.
-MineWatchLauncher va être le software pour vous et les modérateurs etc. Vous devrez inserré l'url de votre api et c'est prêt, vous pouvez consulter les logs de votre serveur.
+- MineWatchAPI va permettre de récupérer les données dans votre database et les classer dans un tableau json sur le web.
+- MineWatchLauncher va être le software pour vous et les modérateurs etc. Vous devrez inserré l'url de votre api et c'est prêt, vous pouvez consulter les logs de votre serveur.
 
 ## Avantages
 
