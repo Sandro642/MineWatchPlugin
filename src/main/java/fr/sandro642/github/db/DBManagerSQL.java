@@ -61,7 +61,7 @@ public class DBManagerSQL {
     private static final String DB_URL = MineWatch.getInstance().getConfig().getString("MineWatch.DB_URI");
     private static final String USER = MineWatch.getInstance().getConfig().getString("MineWatch.USER");
     private static final String PASS = MineWatch.getInstance().getConfig().getString("MineWatch.PASS");
-    private static final String TABLE_NAME = MineWatch.getInstance().getConfig().getString("MineWatch.TABLE");
+    private static final String TABLE_NAME = "minewatch_table";
 
 
     /**
